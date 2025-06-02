@@ -122,3 +122,26 @@ body {
 .corn {
   color: #d4af37;
 }
+
+.opportunity-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.opportunity {
+  max-width: 200px;
+  flex: 1 1 200px;
+  text-align: center;
+}
+
+.opportunity img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 200px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
