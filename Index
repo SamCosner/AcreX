@@ -17,18 +17,17 @@
       background-color: #fff;
     }
 
-.hero {
-  background: url("images/AcreXHero.jpeg");
-  height: 100vh;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  text-align: center;
-}
-
+    .hero {
+      background: url("images/AcreXHero.jpeg") no-repeat center center / cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+    }
 
     .hero h1 {
       font-size: 5rem;
@@ -118,15 +117,15 @@
     <p>Explore the different Opportunities in land ownership that best fit your own needs as a member and landholder.</p>
     <div class="cards">
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Hay_field_in_Scotland.jpg" alt="Hay">
+        <img src="images/AcreXLand1.jpeg" alt="Hay">
         <span class="hay">HAY</span>
       </div>
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Aerial_view_of_soy_fields.jpg" alt="Soy">
+        <img src="images/AcreXLand2.jpeg" alt="Soy">
         <span class="soy">SOY</span>
       </div>
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Corn_field_fall_colors.jpg" alt="Corn">
+        <img src="images/AcreXLand3.jpeg" alt="Corn">
         <span class="corn">CORN</span>
       </div>
     </div>
