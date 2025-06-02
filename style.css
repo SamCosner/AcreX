@@ -30,14 +30,14 @@ body {
 }
 
 .logo {
-  width: 100px;
+  width: 800px;
   margin-bottom: 10px;
 }
 
 .title {
   font-size: 8rem;
   margin: 0;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .subtitle {
