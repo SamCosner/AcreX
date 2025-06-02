@@ -3,38 +3,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coming Soon</title>
+  <title>AcreX | Tokenized Farmland</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background: #f9f9f9;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #fff;
+    }
+
+    .hero {
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Young_cornfield.jpg/1280px-Young_cornfield.jpg') no-repeat center center/cover;
+      height: 100vh;
+      color: white;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      flex-direction: column;
+      position: relative;
       text-align: center;
     }
-    h1 {
-      font-size: 3rem;
-      color: #333;
+
+    .hero h1 {
+      font-size: 5rem;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 1.5rem;
     }
-    p {
+
+    .hero p {
       font-size: 1.25rem;
-      color: #666;
+      margin-top: 1rem;
     }
-    .logo {
-      width: 100px;
-      margin-bottom: 20px;
+
+    .hero .btn {
+      margin-top: 1.5rem;
+      background-color: #006400;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
     }
+
+    .down-arrow {
+      position: absolute;
+      bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section p {
+      color: #555;
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 200px;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .card span {
+      display: block;
+      margin-top: 0.5rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .hay { color: darkgreen; }
+    .soy { color: gray; }
+    .corn { color: goldenrod; }
   </style>
 </head>
 <body>
-  <!-- Optional Logo -->
-  <!-- <img src="logo.png" alt="Logo" class="logo" /> -->
-  <h1>Coming Soon</h1>
-  <p>This site is under construction. Check back soon!</p>
+
+  <div class="hero">
+    <h1>AcreX</h1>
+    <p>Invest in farms with Tokenized Ownership</p>
+    <a href="#opportunities" class="btn">LEARN MORE</a>
+    <div class="down-arrow">⌄</div>
+  </div>
+
+  <div class="section" id="opportunities">
+    <h2>Opportunities</h2>
+    <p>Explore the different Opportunities in land ownership that best fit your own needs as a member and landholder.</p>
+    <div class="cards">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Hay_field_in_Scotland.jpg" alt="Hay">
+        <span class="hay">HAY</span>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Aerial_view_of_soy_fields.jpg" alt="Soy">
+        <span class="soy">SOY</span>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Corn_field_fall_colors.jpg" alt="Corn">
+        <span class="corn">CORN</span>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
