@@ -8,25 +8,27 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 2vw;
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
 }
 
 .logo {
-    height: 50px;
+    height: 8vw;
+    max-height: 50px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 2vw;
 }
 
 nav a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .hero {
@@ -36,7 +38,7 @@ nav a {
 
 .hero-image {
     width: 100%;
-    height: 400px;
+    height: 50vh;
     object-fit: cover;
 }
 
@@ -50,18 +52,18 @@ nav a {
 }
 
 .hero-text h1 {
-    font-size: 3em;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 1vh;
 }
 
 .hero-text p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    margin-bottom: 2vh;
 }
 
 .hero-text button {
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 1.5vw 3vw;
+    font-size: 1rem;
     background-color: #28a745;
     color: white;
     border: none;
@@ -74,52 +76,103 @@ nav a {
 }
 
 .how-it-works {
-    padding: 50px 20px;
+    padding: 5vw 2vw;
     text-align: center;
 }
 
 .steps {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 30px;
+    gap: 3vw;
+    margin-top: 3vh;
+    flex-wrap: wrap;
 }
 
 .step {
-    max-width: 300px;
+    max-width: 100%;
+    width: 25vw;
+    min-width: 200px;
 }
 
 .step img {
-    height: 50px;
-    margin-bottom: 10px;
+    height: 8vw;
+    max-height: 50px;
+    margin-bottom: 1vh;
 }
 
 .listings {
-    padding: 50px 20px;
+    padding: 5vw 2vw;
     text-align: center;
 }
 
 .listing-grid {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 30px;
+    gap: 3vw;
+    margin-top: 3vh;
+    flex-wrap: wrap;
 }
 
 .listing {
-    max-width: 300px;
+    max-width: 100%;
+    width: 25vw;
+    min-width: 200px;
 }
 
 .listing img {
     width: 100%;
-    height: 200px;
+    height: 20vh;
     object-fit: cover;
     border-radius: 5px;
 }
 
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 2vw;
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 1vh;
+    }
+
+    .hero-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .hero-text button {
+        padding: 2vw 4vw;
+        font-size: 0.9rem;
+    }
+
+    .steps, .listing-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step, .listing {
+        width: 60vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-text p {
+        font-size: 0.9rem;
+    }
+
+    .step, .listing {
+        width: 80vw;
+    }
 }
