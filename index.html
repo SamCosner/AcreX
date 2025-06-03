@@ -3,44 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AcreX - Invest in Farms</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
-  <link rel="icon" href="images/favicon.png" type="image/png">
+  <title>AcreX Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <img src="images/AcreXHero.jpeg" alt="Farm Field" class="hero-bg" />
-    <div class="hero-content">
-      <img src="images/AcreXLogo.png" alt="AcreX Logo" class="logo" />
+  <header>
+    <h1>Invest in Farms with Tokenized Ownership</h1>
+  </header>
 
-      <p class="subtitle">Invest in Farms with Tokenized Ownership</p>
-      <a href="#opportunities" class="btn">LEARN MORE</a>
-      <div class="scroll-down">&#x25BC;</div>
-    </div>
-  </section>
-
-  <!-- Opportunities Section -->
-  <section id="opportunities" class="opportunities">
-    <h2>Opportunities</h2>
-    <p class="subtext">Explore the different Opportunities in land ownership that best fit you own needs as an investor and land owner.</p>
-    <div class="opportunity-grid">
-      <div class="opportunity">
-        <img src="images/AcreXLand1.jpeg" alt="Hay Field" />
-        <h3 class="label hay">HAY</h3>
+  <section>
+    <h2 style="text-align:center;">How it Works</h2>
+    <div class="features">
+      <div class="feature">
+        <img src="images/tokenization icon.png" alt="Tokenize" />
+        <p>We partner with farmers to convert farmland into digital tokens, each representing a share of ownership.</p>
       </div>
-      <div class="opportunity">
-        <img src="images/AcreXLand2.jpeg" alt="Soy Field" />
-        <h3 class="label soy">SOY</h3>
+      <div class="feature">
+        <img src="images/investicon.png" alt="Invest" />
+        <p>Buy tokens to gain fractional ownership in real, income-generating farmland.</p>
       </div>
-      <div class="opportunity">
-        <img src="images/AcreXLand3.jpeg" alt="Corn Field" />
-        <h3 class="label corn">CORN</h3>
+      <div class="feature">
+        <img src="images/earnicon.png" alt="Earn" />
+        <p>Receive passive income from farm operations and land value appreciation, distributed directly to your wallet.</p>
+      </div>
+      <div class="feature">
+        <img src="images/ownicon.png" alt="Own" />
+        <p>Hold, sell, or trade your tokens anytime. Real assets, real returns, full transparency.</p>
       </div>
     </div>
   </section>
 
+  <section class="marketplace">
+    <h2>AcreX Marketplace Coming Soon</h2>
+    <p>The AcreX Marketplace connects you with vetted farm opportunities across the U.S., offering transparent data on location, projected returns, and long-term growth potential.</p>
+    <div class="farmland-listings">
+      <div class="listing">
+        <img src="images/farmland1listig.png" alt="Farmland Listing 1" />
+      </div>
+      <div class="listing">
+        <img src="images/farmland2listing.png" alt="Farmland Listing 2" />
+      </div>
+    </div>
+    <div class="cta">
+      <h3>Sign Up to Receive Updates on our Progress</h3>
+      <input type="email" id="emailInput" placeholder="Email Address" />
+      <button onclick="submitEmail()">Sign Up</button>
+      <div id="message" class="message"></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
