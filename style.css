@@ -1,123 +1,153 @@
+/* style.css */
 body {
-  font-family: 'Montserrat', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
 }
 
-.hero {
-  color: white;
-  padding: 60px 20px;
-  text-align: center;
+header {
+    text-align: center;
+    padding: 40px;
 }
 
-.hero header img {
-  max-width: 180px;
-  margin-bottom: 20px;
+header img {
+    width: 150px;
+    margin-bottom: 20px;
 }
 
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+header h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 20px;
 }
 
-.hero button {
-  font-size: 1rem;
-  padding: 10px 20px;
-  background-color: white;
-  color: black;
-  border: none;
-  cursor: pointer;
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 5px;
 }
 
-.how-it-works {
-  padding: 40px 20px;
-  text-align: center;
+button:hover {
+    background-color: #45a049;
+}
+
+section {
+    padding: 50px;
+    text-align: center;
+}
+
+.how-it-works h2, .marketplace h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 30px;
 }
 
 .steps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .step {
-  max-width: 220px;
-  margin: 20px;
+    width: 220px;
+    margin-bottom: 20px;
 }
 
-.marketplace {
-  background-color: #fdfdf3;
-  padding: 60px 20px;
+.step img {
+    width: 60px;
+    margin-bottom: 15px;
 }
 
-.marketplace-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
+.step h3 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.marketplace p {
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    line-height: 1.6;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+form input[type="email"] {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+        width: 80%;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    form input[type="email"] {
+        width: 100%;
+    }
+
+  .marketplace-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
 }
 
 .marketplace-text {
-  flex: 1;
-  min-width: 280px;
-  max-width: 600px;
-}
-
-.marketplace-text h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.marketplace-text p {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.marketplace-text form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.marketplace-text input[type=\"email\"] {
-  flex: 1;
-  padding: 10px;
-  font-size: 1rem;
-}
-
-.marketplace-text button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: black;
-  color: white;
-  border: none;
-  cursor: pointer;
+    flex: 1;
+    min-width: 280px;
+    text-align: left;
 }
 
 .marketplace-image {
-  flex: 1;
-  min-width: 280px;
-  max-width: 500px;
-  text-align: center;
+    flex: 1;
+    min-width: 280px;
+    text-align: center;
 }
 
 .marketplace-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .marketplace-content {
-    flex-direction: column;
-    align-items: center;
-  }
+@media screen and (max-width: 768px) {
+    .marketplace-content {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .hero h1 {
-    font-size: 1.8rem;
-  }
+    .marketplace-text {
+        text-align: center;
+    }
+}
+
 }
