@@ -2,80 +2,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AcreX Token Interaction</title>
+  <meta charset="UTF-8">
+  <title>AcreX Mint Tokens</title>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 100px;">
+<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 80px;">
+  <h1>Mint AcreX Cow Token</h1>
+  <button id="connect-wallet">Connect Wallet</button>
+  <p id="wallet-address" style="margin-top: 20px;"></p>
 
-  <h1>AcreX Token: Buy & Check Balance</h1>
-  <button id="connect-button" style="font-size: 1.2em; padding: 12px 24px;">Connect Wallet</button>
-  <p id="wallet-address" style="margin: 20px;"></p>
-
-  <div id="token-section" style="display: none;">
-    <p><strong>Token Balance:</strong> <span id="token-balance">Loading...</span></p>
-
-    <input id="buy-amount" type="number" min="0.01" step="0.01" placeholder="ETH amount" />
-    <button id="buy-button">Buy Token</button>
-    <p id="buy-status" style="margin-top: 10px;"></p>
+  <div style="margin-top: 30px;" id="mint-section" hidden>
+    <input id="mint-amount" type="number" min="1" value="1" />
+    <button id="mint-button">Mint Tokens</button>
+    <p id="mint-status" style="margin-top: 10px;"></p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script>
     const tokenAddress = "0x5c5d34599745be9719e816bb40E86d9705Ae636b";
     const tokenAbi = [
-      "function balanceOf(address owner) view returns (uint256)",
-      "function decimals() view returns (uint8)"
+      {
+        "inputs":[
+          {"internalType":"address","name":"to","type":"address"},
+          {"internalType":"uint256","name":"amount","type":"uint256"}
+        ],
+        "name":"mintTo",
+        "outputs":[],
+        "stateMutability":"nonpayable",
+        "type":"function"
+      }
     ];
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    let signer, userAddress, token;
+    let signer, userAddress, tokenContract;
 
     async function connectWallet() {
+      if (!window.ethereum) return alert("Install MetaMask");
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
-      token = new ethers.Contract(tokenAddress, tokenAbi, provider);
-
       document.getElementById("wallet-address").innerText = "Connected: " + userAddress;
-      document.getElementById("token-section").style.display = "block";
-      updateBalance();
+      tokenContract = new ethers.Contract(tokenAddress, tokenAbi, signer);
+      document.getElementById("mint-section").hidden = false;
     }
 
-    async function updateBalance() {
+    async function mintTokens() {
+      const amount = document.getElementById("mint-amount").value;
       try {
-        const rawBalance = await token.balanceOf(userAddress);
-        const decimals = await token.decimals();
-        const formattedBalance = ethers.utils.formatUnits(rawBalance, decimals);
-        document.getElementById("token-balance").innerText = formattedBalance + " tokens";
-      } catch (err) {
-        document.getElementById("token-balance").innerText = "Error fetching balance";
-      }
-    }
-
-    async function buyToken() {
-      const ethAmount = document.getElementById("buy-amount").value;
-      if (!ethAmount || isNaN(ethAmount) || Number(ethAmount) <= 0) {
-        document.getElementById("buy-status").innerText = "Enter a valid ETH amount.";
-        return;
-      }
-
-      try {
-        const tx = await signer.sendTransaction({
-          to: tokenAddress,
-          value: ethers.utils.parseEther(ethAmount)
-        });
+        const tx = await tokenContract.mintTo(userAddress, ethers.utils.parseUnits(amount, 18));
+        document.getElementById("mint-status").innerText = "Transaction sent... waiting";
         await tx.wait();
-        document.getElementById("buy-status").innerText = "Transaction complete!";
-        updateBalance();
+        document.getElementById("mint-status").innerText = "Tokens minted!";
       } catch (err) {
         console.error(err);
-        document.getElementById("buy-status").innerText = "Transaction failed.";
+        document.getElementById("mint-status").innerText = "Error: " + err.message;
       }
     }
 
-    document.getElementById("connect-button").addEventListener("click", connectWallet);
-    document.getElementById("buy-button").addEventListener("click", buyToken);
+    document.getElementById("connect-wallet").addEventListener("click", connectWallet);
+    document.getElementById("mint-button").addEventListener("click", mintTokens);
   </script>
 </body>
 </html>
