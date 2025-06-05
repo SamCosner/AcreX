@@ -9,17 +9,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Connect Your Wallet to AcreX</h1>
+<h1>Connect Your Wallet to AcreX</h1>
   <div id="connect-button-container" style="margin-top: 40px;"></div>
 
-  <script src="https://sdk.twconnect.dev/v1"></script>
+  <script src="https://unpkg.com/@thirdweb-dev/wallets@latest/dist/wallets.umd.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", function () {
-      const connect = window.twConnect.createConnectButton({
-        clientId: "689e2ac97c20befd3e1ab5c236b48184",
-        chain: "sepolia",
+      const { ConnectWallet } = window.thirdweb.wallets;
+      
+      const connectButton = ConnectWallet({
+        theme: "dark",
+        modalSize: "wide",
+        chain: {
+          chainId: 11155111, // Sepolia
+        },
+        walletConfig: {
+          metaMask: true,
+          coinbase: true,
+        },
       });
-      document.getElementById("connect-button-container").appendChild(connect);
+
+      document.getElementById("connect-button-container").appendChild(connectButton);
     });
   </script>
 
