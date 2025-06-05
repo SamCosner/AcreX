@@ -1,33 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AcreX Wallet Connect</title>
+  <title>AcreX Token Interaction</title>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; margin-top: 100px;">
+<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 100px;">
 
-  <h1>Connect Your Wallet to AcreX</h1>
-  <button id="connect-button" style="font-size: 1.2em; padding: 12px 24px; margin-top: 40px;">Connect Wallet</button>
-  <p id="wallet-address" style="margin-top: 20px;"></p>
+  <h1>AcreX Token: Buy & Check Balance</h1>
+  <button id="connect-button" style="font-size: 1.2em; padding: 12px 24px;">Connect Wallet</button>
+  <p id="wallet-address" style="margin: 20px;"></p>
+
+  <div id="token-section" style="display: none;">
+    <p><strong>Token Balance:</strong> <span id="token-balance">Loading...</span></p>
+
+    <input id="buy-amount" type="number" min="0.01" step="0.01" placeholder="ETH amount" />
+    <button id="buy-button">Buy Token</button>
+    <p id="buy-status" style="margin-top: 10px;"></p>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script>
-    async function connectWallet() {
-      if (!window.ethereum) {
-        alert("MetaMask is not installed");
-        return;
-      }
+    const tokenAddress = "0x5c5d34599745be9719e816bb40E86d9705Ae636b";
+    const tokenAbi = [
+      "function balanceOf(address owner) view returns (uint256)",
+      "function decimals() view returns (uint8)"
+    ];
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer, userAddress, token;
+
+    async function connectWallet() {{
       await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
+      signer = provider.getSigner();
+      userAddress = await signer.getAddress();
+      token = new ethers.Contract(tokenAddress, tokenAbi, provider);
 
-      document.getElementById("wallet-address").innerText = "Connected: " + address;
-    }
+      document.getElementById("wallet-address").innerText = "Connected: " + userAddress;
+      document.getElementById("token-section").style.display = "block";
+      updateBalance();
+    }}
+
+    async function updateBalance() {{
+      try {{
+        const rawBalance = await token.balanceOf(userAddress);
+        const decimals = await token.decimals();
+        const formattedBalance = ethers.utils.formatUnits(rawBalance, decimals);
+        document.getElementById("token-balance").innerText = formattedBalance + " tokens";
+      }} catch (err) {{
+        document.getElementById("token-balance").innerText = "Error fetching balance";
+      }}
+    }}
+
+    async function buyToken() {{
+      const ethAmount = document.getElementById("buy-amount").value;
+      if (!ethAmount || isNaN(ethAmount) || Number(ethAmount) <= 0) {{
+        document.getElementById("buy-status").innerText = "Enter a valid ETH amount.";
+        return;
+      }}
+
+      try {{
+        const tx = await signer.sendTransaction({{
+          to: tokenAddress,
+          value: ethers.utils.parseEther(ethAmount)
+        }});
+        await tx.wait();
+        document.getElementById("buy-status").innerText = "Transaction complete!";
+        updateBalance();
+      }} catch (err) {{
+        console.error(err);
+        document.getElementById("buy-status").innerText = "Transaction failed.";
+      }}
+    }}
 
     document.getElementById("connect-button").addEventListener("click", connectWallet);
+    document.getElementById("buy-button").addEventListener("click", buyToken);
   </script>
 </body>
 </html>
