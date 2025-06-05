@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AcreX Wallet Connect</title>
-  <script src="https://unpkg.com/@thirdweb-dev/sdk/dist/browser.min.js"></script>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 100px;">
+<body style="font-family: Arial, sans-serif; text-align: center; margin-top: 100px;">
+
   <h1>Connect Your Wallet to AcreX</h1>
   <button id="connect-button" style="font-size: 1.2em; padding: 12px 24px; margin-top: 40px;">Connect Wallet</button>
   <p id="wallet-address" style="margin-top: 20px;"></p>
 
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script>
-    const sdk = new thirdweb.ThirdwebSDK("sepolia");
-
     async function connectWallet() {
       if (!window.ethereum) {
         alert("MetaMask is not installed");
@@ -30,8 +29,5 @@
 
     document.getElementById("connect-button").addEventListener("click", connectWallet);
   </script>
-
-  <!-- Ethers.js required for signer -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 </body>
 </html>
