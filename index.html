@@ -1,19 +1,91 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AcreX Mint Tokens</title>
-</head>
-<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 80px;">
-  <h1>Mint AcreX Cow Token</h1>
-  <button id="connect-wallet">Connect Wallet</button>
-  <p id="wallet-address" style="margin-top: 20px;"></p>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy AcreX Cow Tokens</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1601979031925-86620d2d2758?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 60px 20px;
+      backdrop-filter: brightness(0.6);
+    }
 
-  <div style="margin-top: 30px;" id="mint-section" hidden>
-    <input id="mint-amount" type="number" min="1" value="1" />
-    <button id="mint-button">Mint Tokens</button>
-    <p id="mint-status" style="margin-top: 10px;"></p>
+    img.logo {
+      width: 140px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #00ff88;
+    }
+
+    button {
+      background-color: #00ff88;
+      color: #000000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #00cc6a;
+    }
+
+    .card {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      margin: 12px 0;
+      border: none;
+      border-radius: 6px;
+    }
+
+    #wallet-address, #buy-status, #token-balance {
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://i.ibb.co/dmKzPvf/AcreX-Logo.png" alt="AcreX Logo" class="logo" />
+  <h1>Buy AcreX Cow Tokens</h1>
+
+  <div class="card">
+    <button id="connect-wallet">Connect Wallet</button>
+    <p id="wallet-address"></p>
+    <p id="token-balance"></p>
+
+    <input id="eth-amount" type="number" min="0.001" step="0.001" placeholder="ETH amount (0.01 = 10 tokens)">
+    <button id="buy-button">Buy Tokens</button>
+    <p id="buy-status"></p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
@@ -21,18 +93,24 @@
     const tokenAddress = "0x5c5d34599745be9719e816bb40E86d9705Ae636b";
     const tokenAbi = [
       {
-        "inputs":[
-          {"internalType":"address","name":"to","type":"address"},
-          {"internalType":"uint256","name":"amount","type":"uint256"}
-        ],
-        "name":"mintTo",
-        "outputs":[],
-        "stateMutability":"nonpayable",
-        "type":"function"
+        "constant": true,
+        "inputs": [{ "name": "account", "type": "address" }],
+        "name": "balanceOf",
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [{ "name": "", "type": "uint8" }],
+        "type": "function"
       }
     ];
 
-    let signer, userAddress, tokenContract;
+    const HOST_WALLET = "0xEf40c5f0B1d20a3B457f27049043CBAeb833A60E"; // Replace with AcreX host wallet
+
+    let signer, userAddress, token;
 
     async function connectWallet() {
       if (!window.ethereum) return alert("Install MetaMask");
@@ -41,26 +119,48 @@
       await provider.send("eth_requestAccounts", []);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
+
       document.getElementById("wallet-address").innerText = "Connected: " + userAddress;
-      tokenContract = new ethers.Contract(tokenAddress, tokenAbi, signer);
-      document.getElementById("mint-section").hidden = false;
+
+      token = new ethers.Contract(tokenAddress, tokenAbi, provider);
+      updateTokenBalance();
     }
 
-    async function mintTokens() {
-      const amount = document.getElementById("mint-amount").value;
+    async function updateTokenBalance() {
       try {
-        const tx = await tokenContract.mintTo(userAddress, ethers.utils.parseUnits(amount, 18));
-        document.getElementById("mint-status").innerText = "Transaction sent... waiting";
-        await tx.wait();
-        document.getElementById("mint-status").innerText = "Tokens minted!";
+        const rawBalance = await token.balanceOf(userAddress);
+        const decimals = await token.decimals();
+        const formatted = ethers.utils.formatUnits(rawBalance, decimals);
+        document.getElementById("token-balance").innerText = "Token Balance: " + formatted;
       } catch (err) {
         console.error(err);
-        document.getElementById("mint-status").innerText = "Error: " + err.message;
+        document.getElementById("token-balance").innerText = "Unable to fetch balance.";
+      }
+    }
+
+    async function buyTokens() {
+      const ethAmount = document.getElementById("eth-amount").value;
+      if (!ethAmount || isNaN(ethAmount) || Number(ethAmount) <= 0) {
+        document.getElementById("buy-status").innerText = "Enter a valid ETH amount.";
+        return;
+      }
+
+      try {
+        const tx = await signer.sendTransaction({
+          to: HOST_WALLET,
+          value: ethers.utils.parseEther(ethAmount)
+        });
+        await tx.wait();
+        document.getElementById("buy-status").innerText = "Purchase complete!";
+        updateTokenBalance();
+      } catch (err) {
+        console.error(err);
+        document.getElementById("buy-status").innerText = "Transaction failed.";
       }
     }
 
     document.getElementById("connect-wallet").addEventListener("click", connectWallet);
-    document.getElementById("mint-button").addEventListener("click", mintTokens);
+    document.getElementById("buy-button").addEventListener("click", buyTokens);
   </script>
 </body>
 </html>
