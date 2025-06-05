@@ -31,7 +31,7 @@
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     let signer, userAddress, token;
 
-    async function connectWallet() {{
+    async function connectWallet() {
       await provider.send("eth_requestAccounts", []);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
@@ -40,39 +40,39 @@
       document.getElementById("wallet-address").innerText = "Connected: " + userAddress;
       document.getElementById("token-section").style.display = "block";
       updateBalance();
-    }}
+    }
 
-    async function updateBalance() {{
-      try {{
+    async function updateBalance() {
+      try {
         const rawBalance = await token.balanceOf(userAddress);
         const decimals = await token.decimals();
         const formattedBalance = ethers.utils.formatUnits(rawBalance, decimals);
         document.getElementById("token-balance").innerText = formattedBalance + " tokens";
-      }} catch (err) {{
+      } catch (err) {
         document.getElementById("token-balance").innerText = "Error fetching balance";
-      }}
-    }}
+      }
+    }
 
-    async function buyToken() {{
+    async function buyToken() {
       const ethAmount = document.getElementById("buy-amount").value;
-      if (!ethAmount || isNaN(ethAmount) || Number(ethAmount) <= 0) {{
+      if (!ethAmount || isNaN(ethAmount) || Number(ethAmount) <= 0) {
         document.getElementById("buy-status").innerText = "Enter a valid ETH amount.";
         return;
-      }}
+      }
 
-      try {{
-        const tx = await signer.sendTransaction({{
+      try {
+        const tx = await signer.sendTransaction({
           to: tokenAddress,
           value: ethers.utils.parseEther(ethAmount)
-        }});
+        });
         await tx.wait();
         document.getElementById("buy-status").innerText = "Transaction complete!";
         updateBalance();
-      }} catch (err) {{
+      } catch (err) {
         console.error(err);
         document.getElementById("buy-status").innerText = "Transaction failed.";
-      }}
-    }}
+      }
+    }
 
     document.getElementById("connect-button").addEventListener("click", connectWallet);
     document.getElementById("buy-button").addEventListener("click", buyToken);
