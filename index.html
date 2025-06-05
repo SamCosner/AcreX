@@ -9,6 +9,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1>Connect Your Wallet to AcreX</h1>
+  <div id="connect-button-container" style="margin-top: 40px;"></div>
+
+  <script src="https://sdk.twconnect.dev/v1"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      const connect = window.twConnect.createConnectButton({
+        clientId: "689e2ac97c20befd3e1ab5c236b48184",
+        chain: "sepolia",
+      });
+      document.getElementById("connect-button-container").appendChild(connect);
+    });
+  </script>
+
 
   <section class="hero" style="background-image: url('images/AcreXHero.jpeg'); background-size: cover; background-position: center;">
     <header>
